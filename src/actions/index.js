@@ -27,3 +27,38 @@ export const ADD_PLAYER_MOVE = 'ADD_PLAYER_MOVE'
 export const ADD_COMPUTER_MOVE = 'ADD_COMPUTER_MOVE'
 export const SET_PLAYAS = 'SET_PLAYAS'
 export const SET_WINNING_STATUS = 'SET_WINNING_STATUS'
+
+export const restartGame = () => {
+  return {
+    type: RESTART_GAME,
+    playing: false
+  }
+}
+
+export const addPlayerMove = move => {
+  return {
+    type: ADD_PLAYER_MOVE,
+    move: move
+  }
+}
+
+export const addComputerMove = move => {
+  return {
+    type: ADD_COMPUTER_MOVE,
+    move: move
+  }
+}
+
+export const playAs = playas => {
+  return {
+    type: SET_PLAYAS,
+    playas: playas
+  }
+}
+
+expoert const setWinningStatus = status => {
+  return {
+    type: SET_WINNING_STATUS,
+    winningStatus: status
+  }
+}
