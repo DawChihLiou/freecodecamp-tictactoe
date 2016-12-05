@@ -1,14 +1,26 @@
-import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { setBoard } from '../actions'
 import Board from '../components/Board'
 
-const dummyboard = [['x','x','o'],['x','o','o'],['x','o','x']]
-
-class App extends Component {
-  render() {
-    return (
-      <Board board={ dummyboard }/>
-    )
+const mapStateToProps = (state) => {
+  return {
+    board : state.board,
+    player: state.player
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCellClick: (e, player) => {
+      var coor = e.target.id.split('-')
+      dispatch(setBoard(coor[0], coor[1], player))
+    }
+  }
+}
+
+const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (Board)
 
 export default App;

@@ -18,55 +18,27 @@
  */
 
 export const RESTART_GAME       = 'RESTART_GAME'
-export const ADD_PLAYER_MOVE    = 'ADD_PLAYER_MOVE'
-export const ADD_COMPUTER_MOVE  = 'ADD_COMPUTER_MOVE'
-export const SET_PLAYAS         = 'SET_PLAYAS'
+export const SET_BOARD          = 'SET_BOARD'
+export const SET_PLAYAS         = 'SET_PLAYER'
 export const SET_WINNING_STATUS = 'SET_WINNING_STATUS'
 
-export const restartGame = () => {
-  var won       = null
-  var playas    = null
-  var computer  = []
-  var player    = []
-  var winCombos = [
-     [1, 2, 3],
-     [4, 5, 6],
-     [7, 8, 9],
-     [1, 4, 7],
-     [2, 5, 8],
-     [3, 6, 9],
-     [1, 5, 9],
-     [7, 5, 3]
-   ]
-
+export const setBoard = (row, col, player) => {
   return {
-    type: RESTART_GAME,
-    defaultState: { won, playas, computer, player, winCombos }
+    type: SET_BOARD,
+    row,
+    col,
+    player
   }
 }
 
-export const addPlayerMove = move => {
-  return {
-    type: ADD_PLAYER_MOVE,
-    move: move
-  }
-}
-
-export const addComputerMove = move => {
-  return {
-    type: ADD_COMPUTER_MOVE,
-    move: move
-  }
-}
-
-export const playAs = playas => {
+export const setPlayer = (playAs) => {
   return {
     type: SET_PLAYAS,
-    playas: playas
+    playAs: playAs
   }
 }
 
-export const setWinningStatus = status => {
+export const setWinningStatus = (status) => {
   return {
     type: SET_WINNING_STATUS,
     winningStatus: status
