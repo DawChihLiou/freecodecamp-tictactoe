@@ -24,11 +24,11 @@ export const SET_PLAYAS         = 'SET_PLAYAS'
 export const SET_WINNING_STATUS = 'SET_WINNING_STATUS'
 
 export const restartGame = () => {
-  let won       = null
-  let playas    = null
-  let computer  = []
-  let player    = []
-  let winCombos = [
+  var won       = null
+  var playas    = null
+  var computer  = []
+  var player    = []
+  var winCombos = [
      [1, 2, 3],
      [4, 5, 6],
      [7, 8, 9],
