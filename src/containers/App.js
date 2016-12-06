@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setBoard, setWinCombos } from '../actions'
+import { setBoard, setWinCombos, setWinningStatus } from '../actions'
 import Board from '../components/Board'
 
 const mapStateToProps = (state) => {
@@ -13,27 +13,39 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCellClick: (e, player) => {
       var coor = e.target.id.split('-')
-      dispatch(move(coor[0], coor[1], player))
+      dispatch(moveThunk(coor[0], coor[1], player))
     }
   }
 }
 
-function move (row, col, player) {
+function moveThunk (row, col, player) {
   return (dispatch, getState) => {
     var state           = getState()
     var computerSymbal  = state.player === 'x' ? 'o' : 'x'
-    var next
+    var totalMoves      = getMoves(state.board, new RegExp('[' + state.player + computerSymbal + ']'))
+    var next, status
+
+    if (totalMoves.length === 9) return
 
     // player's move
     dispatch(setBoard(row, col, state.player))
     dispatch(setWinCombos(row, col, 'COMPUTER'))
 
     state = getState()
-    next = computeNextMove(state)
+    status = getGameStatus(state)
+    dispatch(setWinningStatus(status || ''))
+
+    totalMoves = getMoves(state.board, new RegExp('[' + state.player + computerSymbal + ']'))
+    if (totalMoves.length === 9) return
 
     // computer's move
+    next = computeNextMove(state)
     dispatch(setBoard(next.row, next.col, computerSymbal))
     dispatch(setWinCombos(next.row, next.col, 'PLAYER'))
+
+    state = getState()
+    status = getGameStatus(state)
+    dispatch(setWinningStatus(status || ''))
   }
 }
 
@@ -51,8 +63,8 @@ const numberMap = [
 
 function computeNextMove (state) {
   var computerSymbal = state.player === 'x' ? 'o' : 'x'
-  var playerMoves    = getMoves(state.board, state.player)
-  var computerMoves  = getMoves(state.board, computerSymbal)
+  var playerMoves    = getMoves(state.board, new RegExp(state.player))
+  var computerMoves  = getMoves(state.board, new RegExp(computerSymbal))
   var next
 
   // check if player has twos in a row
@@ -65,12 +77,12 @@ function computeNextMove (state) {
   return {row: coordMap[next][0], col: coordMap[next][1]}
 }
 
-function getMoves (board, player) {
+function getMoves (board, regex) {
   var moves = []
 
   board.forEach((row, i) => {
     row.forEach((cell, j) => {
-      if (cell === player) moves.push(numberMap[i][j])
+      if (regex.test(cell)) moves.push(numberMap[i][j])
     })
   })
 
@@ -143,6 +155,45 @@ function findBestEmptyMove (moves) {
   }
 
   return move
+}
+
+function getGameStatus (state) {
+  var status, count
+  var computerSymbal = state.player === 'x' ? 'o' : 'x'
+  var playerMoves    = getMoves(state.board, new RegExp(state.player))
+  var computerMoves  = getMoves(state.board, new RegExp(computerSymbal))
+
+  // check lose
+  state.winCombos.computer.forEach(combo => {
+    if (status) return
+
+    combo.forEach(num => {
+      if (computerMoves.indexOf(num) !== -1) count++
+    })
+    if (count !== 3) count = 0
+    else status = 'You lose'
+  })
+
+  // check win
+  state.winCombos.player.forEach(combo => {
+    if (status) return
+
+    combo.forEach(num => {
+      if (computerMoves.indexOf(num) !== -1) count++
+    })
+    if (count !== 3) count = 0
+    else status = 'You win!'
+  })
+
+  // check tie
+  if (
+    playerMoves.length + computerMoves.length === 9 &&
+    state.winCombos.player.length === 0 &&
+    state.winCombos.computer.length === 0 ) {
+      status = 'It\'s a tie!'
+  }
+
+  return status
 }
 
 const App = connect(

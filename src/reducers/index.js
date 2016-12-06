@@ -3,7 +3,8 @@ import {
   SET_BOARD,
   SET_PLAYAS,
   FILTER_PLAYER_WIN_COMBOS,
-  FILTER_COMPUTER_WIN_COMBOS
+  FILTER_COMPUTER_WIN_COMBOS,
+  SET_WINNING_STATUS
 } from '../actions'
 
 const gameBoard = (state = [
@@ -41,7 +42,7 @@ const winCombos = (state = {
     [2, 5, 8], [3, 6, 9], [1, 5, 9], [7, 5, 3]]
   }, action) => {
     var  nextState
-    
+
     switch (action.type) {
       case FILTER_PLAYER_WIN_COMBOS:
         nextState = Object.assign({}, state)
@@ -62,10 +63,20 @@ const winCombos = (state = {
     }
 }
 
+const winningStatus = (state = '', action) => {
+  switch (action.type) {
+    case SET_WINNING_STATUS:
+      return action.winningStatus
+    default:
+      return state
+  }
+}
+
 const reducer = combineReducers({
   board : gameBoard,
   player,
-  winCombos
+  winCombos,
+  winningStatus
 })
 
 export default reducer

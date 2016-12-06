@@ -5,4 +5,5 @@
   border: 0.2em #333 solid;
   min-height: 2em;
   padding: 1em;
+  cursor: pointer;
 }
