@@ -22,7 +22,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(moveThunk(coor[0], coor[1], player))
     },
     onPlayClick: (e) => {
+      var next
+
       dispatch(setPlayer(e.target.id))
+
+      if (e.target.id === 'x') {
+        // o goest first
+        dispatch(computerMoveThunk())
+      }
     }
   }
 }
@@ -67,6 +74,19 @@ function moveThunk (row, col, player) {
         dispatch(refresh())
       }, 1000)
     }
+  }
+}
+
+function computerMoveThunk () {
+  return (dispatch, getState) => {
+    var state           = getState()
+    var computerSymbal  = state.player === 'x' ? 'o' : 'x'
+    var next
+
+    next = computeNextMove(state)
+    dispatch(setBoard(next.row, next.col, computerSymbal))
+    dispatch(setWinCombos(next.row, next.col, 'PLAYER'))
+
   }
 }
 
@@ -181,7 +201,7 @@ function findBestEmptyMove (moves) {
 }
 
 function getGameStatus (state) {
-  var status, count
+  var status, count = 0
   var computerSymbal = state.player === 'x' ? 'o' : 'x'
   var playerMoves    = getMoves(state.board, new RegExp(state.player))
   var computerMoves  = getMoves(state.board, new RegExp(computerSymbal))

@@ -1,9 +1,45 @@
+body {
+  background-color: #BDC3C7;
+}
 .game-board {
-  border: 0.2em #333 solid;
+  border: .2em #333 solid;
+}
+.board {
+  border: .4em #333 solid;
+  padding: 1em .5em;
 }
 .cell {
-  border: 0.2em #333 solid;
+  border: .1em #333 solid;
   min-height: 2em;
   padding: 1em;
   cursor: pointer;
+  color: #E08283;
+  font-size: 36px;
+}
+.board h1.link {
+  cursor:pointer;
+  transition: .25s color linear;
+}
+.board h1.link:hover {
+  color: #E08283;
+}
+.margin-top-md {
+  margin-top: 2em;
+}
+.margin-top-sm {
+  margin-top: 1em;
+}
+a {
+  color: #333;
+  text-decoration: none;
+  -webkit-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+}
+a:hover, a:active {
+  color: #E08283;
+  text-decoration: none;
+}
+a:visited {
+  color: #B84D4D;
+  text-decoration: none;
 }

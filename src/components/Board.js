@@ -8,7 +8,7 @@ const Board = ({ board, winningStatus, player, onCellClick, onPlayClick }) => {
   }
 
   return (
-    <div>
+    <div className="container-fluid margin-top-md">
       <div className="container-fluid game-board">
         {board.map((row, i) =>
             <Row
@@ -22,7 +22,7 @@ const Board = ({ board, winningStatus, player, onCellClick, onPlayClick }) => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-xs-12">
-            <h1 className="text-center">{ winningStatus }</h1>
+            <h1 className="text-center">{ winningStatus || <span style={{ visibility: 'hidden' }}>_</span> }</h1>
           </div>
         </div>
       </div>

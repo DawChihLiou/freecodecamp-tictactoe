@@ -9,7 +9,7 @@ const Row = ({ row, rowIndex, onClick}) => (
         className="col-xs-4 cell text-center"
         onClick={ onClick }
       >
-        { c || '_'}
+        { c || <span style={{ visibility: 'hidden' }}>_</span> }
       </div>
     )}
   </div>
