@@ -1,7 +1,12 @@
 import React from 'react'
 import Row from './Row'
+import PlayerCard from './PlayerCard'
 
-const Board = ({ board, winningStatus, onCellClick }) => {
+const Board = ({ board, winningStatus, player, onCellClick, onPlayClick }) => {
+  if (!player.length) {
+    return <PlayerCard onPlayClick={ onPlayClick }/>
+  }
+
   return (
     <div>
       <div className="container-fluid game-board">

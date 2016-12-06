@@ -25,7 +25,7 @@ const gameBoard = (state = [
   }
 }
 
-const player = (state = 'o', action) => {
+const player = (state = '', action) => {
   switch (action.type) {
     case SET_PLAYAS:
       return action.playAs

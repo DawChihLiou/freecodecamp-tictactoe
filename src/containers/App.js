@@ -1,11 +1,17 @@
 import { connect } from 'react-redux'
-import { setBoard, setWinCombos, setWinningStatus, refresh } from '../actions'
+import {
+  setBoard,
+  setWinCombos,
+  setWinningStatus,
+  refresh,
+  setPlayer } from '../actions'
 import Board from '../components/Board'
 
 const mapStateToProps = (state) => {
   return {
-    board : state.board,
-    winningStatus: state.winningStatus
+    board         : state.board,
+    winningStatus : state.winningStatus,
+    player        : state.player
   }
 }
 
@@ -14,6 +20,9 @@ const mapDispatchToProps = (dispatch) => {
     onCellClick: (e, player) => {
       var coor = e.target.id.split('-')
       dispatch(moveThunk(coor[0], coor[1], player))
+    },
+    onPlayClick: (e) => {
+      dispatch(setPlayer(e.target.id))
     }
   }
 }
@@ -34,7 +43,7 @@ function moveThunk (row, col, player) {
     state = getState()
     status = getGameStatus(state)
     dispatch(setWinningStatus(status || ''))
-    
+
     if (status) {
       setTimeout(() => {
         dispatch(refresh())
