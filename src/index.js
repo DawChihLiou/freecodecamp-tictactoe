@@ -6,8 +6,6 @@ import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
 import reducer from './reducers'
 import Main from './components/Main'
-import Header from './components/Header'
-import Footer from './components/Footer'
 import './index.css'
 
 const logger = createLogger()

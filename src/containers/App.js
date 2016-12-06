@@ -36,7 +36,6 @@ function moveThunk (row, col, player) {
 
     var state           = getState()
     var computerSymbal  = state.player === 'x' ? 'o' : 'x'
-    var totalMoves      = getMoves(state.board, new RegExp('[' + state.player + computerSymbal + ']'))
     var next, status
 
     // player's move
@@ -52,8 +51,6 @@ function moveThunk (row, col, player) {
         dispatch(refresh())
       }, 1000)
     }
-
-    if (state.winningStatus !== '') return
 
     // computer's move
     next = computeNextMove(state)

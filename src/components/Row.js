@@ -7,9 +7,8 @@ const Row = ({ row, rowIndex, onClick}) => (
         key={ 'cell-' + i }
         id={ rowIndex + '-' + i }
         className="col-xs-4 cell text-center"
-        onClick={ onClick }
-      >
-        { c || <span style={{ visibility: 'hidden' }}>_</span> }
+        onClick={ onClick } >
+        <span>{ c }</span>
       </div>
     )}
   </div>
