@@ -22,26 +22,22 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(moveThunk(coor[0], coor[1], player))
     },
     onPlayClick: (e) => {
-      var next
-
       dispatch(setPlayer(e.target.id))
-
-      if (e.target.id === 'x') {
-        // o goest first
-        dispatch(computerMoveThunk())
-      }
+      // 'o' always go first
+      if (e.target.id === 'x') dispatch(computerMoveThunk())
     }
   }
 }
 
 function moveThunk (row, col, player) {
   return (dispatch, getState) => {
+    if (getState().winningStatus !== '') return
+    if (getState().board[row][col]) return
+
     var state           = getState()
     var computerSymbal  = state.player === 'x' ? 'o' : 'x'
     var totalMoves      = getMoves(state.board, new RegExp('[' + state.player + computerSymbal + ']'))
     var next, status
-
-    if (totalMoves.length === 9) return
 
     // player's move
     dispatch(setBoard(row, col, state.player))
@@ -57,8 +53,7 @@ function moveThunk (row, col, player) {
       }, 1000)
     }
 
-    totalMoves = getMoves(state.board, new RegExp('[' + state.player + computerSymbal + ']'))
-    if (totalMoves.length === 9) return
+    if (state.winningStatus !== '') return
 
     // computer's move
     next = computeNextMove(state)

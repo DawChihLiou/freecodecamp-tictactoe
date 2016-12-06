@@ -10,7 +10,7 @@ body {
 }
 .cell {
   border: .1em #333 solid;
-  min-height: 2em;
+  height:3.7em;
   padding: 1em;
   cursor: pointer;
   color: #E08283;
