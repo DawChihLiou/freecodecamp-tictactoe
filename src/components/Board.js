@@ -30,5 +30,4 @@ const Board = ({ board, winningStatus, player, onCellClick, onPlayClick }) => {
   )
 }
 
-
 export default Board
