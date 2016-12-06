@@ -4,7 +4,8 @@ import {
   SET_PLAYAS,
   FILTER_PLAYER_WIN_COMBOS,
   FILTER_COMPUTER_WIN_COMBOS,
-  SET_WINNING_STATUS
+  SET_WINNING_STATUS,
+  REFRESH
 } from '../actions'
 
 const gameBoard = (state = [
@@ -72,11 +73,18 @@ const winningStatus = (state = '', action) => {
   }
 }
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
   board : gameBoard,
   player,
   winCombos,
   winningStatus
 })
 
-export default reducer
+const rootReducer = (state, action) => {
+    if (action.type === REFRESH) {
+      state = undefined
+    }
+    return appReducer(state, action)
+}
+
+export default rootReducer

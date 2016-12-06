@@ -1,7 +1,9 @@
 import React from 'react'
 import Row from './Row'
 
-const Board = ({ board, onCellClick }) => (
+const Board = ({ board, winningStatus, onCellClick }) => {
+  return (
+    <div>
       <div className="container-fluid game-board">
         {board.map((row, i) =>
             <Row
@@ -12,7 +14,16 @@ const Board = ({ board, onCellClick }) => (
             />
         )}
       </div>
-    )
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-xs-12">
+            <h1 className="text-center">{ winningStatus }</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 
 export default Board

@@ -21,6 +21,7 @@ export const SET_PLAYAS                 = 'SET_PLAYER'
 export const SET_WINNING_STATUS         = 'SET_WINNING_STATUS'
 export const FILTER_PLAYER_WIN_COMBOS   = 'FILTER_PLAYER_WIN_COMBOS'
 export const FILTER_COMPUTER_WIN_COMBOS = 'FILTER_COMPUTER_WIN_COMBOS'
+export const REFRESH                    = 'REFRESH'
 
 export const setBoard = (row, col, player) => {
   return {
@@ -61,5 +62,11 @@ export const setWinningStatus = (status) => {
   return {
     type: SET_WINNING_STATUS,
     winningStatus: status
+  }
+}
+
+export const refresh = () => {
+  return {
+    type: REFRESH
   }
 }

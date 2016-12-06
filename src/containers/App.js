@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { setBoard, setWinCombos, setWinningStatus } from '../actions'
+import { setBoard, setWinCombos, setWinningStatus, refresh } from '../actions'
 import Board from '../components/Board'
 
 const mapStateToProps = (state) => {
   return {
     board : state.board,
-    player: state.player
+    winningStatus: state.winningStatus
   }
 }
 
@@ -34,6 +34,12 @@ function moveThunk (row, col, player) {
     state = getState()
     status = getGameStatus(state)
     dispatch(setWinningStatus(status || ''))
+    
+    if (status) {
+      setTimeout(() => {
+        dispatch(refresh())
+      }, 1000)
+    }
 
     totalMoves = getMoves(state.board, new RegExp('[' + state.player + computerSymbal + ']'))
     if (totalMoves.length === 9) return
@@ -46,6 +52,12 @@ function moveThunk (row, col, player) {
     state = getState()
     status = getGameStatus(state)
     dispatch(setWinningStatus(status || ''))
+
+    if (status) {
+      setTimeout(() => {
+        dispatch(refresh())
+      }, 1000)
+    }
   }
 }
 
@@ -67,7 +79,9 @@ function computeNextMove (state) {
   var computerMoves  = getMoves(state.board, new RegExp(computerSymbal))
   var next
 
-  // check if player has twos in a row
+  // check if computer has twos in a row
+  if (!next) next = checkPlayerIsWinning(state.winCombos.computer, computerMoves)
+  // check if user has twos in a row
   if (!next) next = checkPlayerIsWinning(state.winCombos.player, playerMoves)
   // look for the best winning move if player is not winning
   if (!next) next = findNextMoveAroundPreviousMoves(state.winCombos.computer, computerMoves)
@@ -179,7 +193,7 @@ function getGameStatus (state) {
     if (status) return
 
     combo.forEach(num => {
-      if (computerMoves.indexOf(num) !== -1) count++
+      if (playerMoves.indexOf(num) !== -1) count++
     })
     if (count !== 3) count = 0
     else status = 'You win!'
