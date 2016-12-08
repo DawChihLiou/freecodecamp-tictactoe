@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find the most recent version of the guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
+You can see the [demo](http://codepen.io/DawChihLiou/full/BQBLwM/) on CodePen.
+
 # Introduction
 This [Free Code Camp challenge](https://www.freecodecamp.com/challenges/build-a-tic-tac-toe-game) is developed with [React](https://facebook.github.io/react/), [Redux](https://github.com/reactjs/redux), and [Bootstrap](http://getbootstrap.com/). It also depends on the following javascript libraries
 ```
